@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository
 import java.util.*
 
 @Repository
-interface MappingRepository : JpaRepository<MappingEntity, UUID>
+interface MappingRepository : JpaRepository<MappingEntity, UUID> {
+
+    fun findByOriginalUrl(originalUrl: String): MappingEntity?
+}

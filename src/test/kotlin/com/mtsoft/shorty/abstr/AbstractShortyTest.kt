@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
+import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.MvcResult
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
@@ -15,6 +16,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
 import java.lang.invoke.MethodHandles
 
+@ActiveProfiles(profiles = ["test"])
 abstract class AbstractShortyTest {
 
     private val log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
@@ -74,5 +76,4 @@ abstract class AbstractShortyTest {
                     ", message=" + result.response.errorMessage)
         }
     }
-
 }

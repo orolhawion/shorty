@@ -15,14 +15,15 @@ class MappingService @Autowired constructor(
         private val mappingRepository: MappingRepository
 ) {
 
-    fun createMapping(request: ShortyCreateRequest): String {
-        val newEntity = MappingEntity()
-        newEntity.originalUrl = request.originalUrl
+    fun createMapping(
+        request: ShortyCreateRequest
+    ): String = mappingRepository.findByOriginalUrl(request.originalUrl)?.let {
+        "$domain/${it.id}"
+    } ?: run {
+            val newEntity = MappingEntity()
+            newEntity.originalUrl = request.originalUrl
+            "$domain/${mappingRepository.save(newEntity).id}"
+        }
 
-        return "$domain/${mappingRepository.save(newEntity).id}"
-    }
-
-    fun getMappedUrl(id: UUID): String? {
-        return mappingRepository.findByIdOrNull(id)?.originalUrl
-    }
+    fun getMappedUrl(id: UUID): String? = mappingRepository.findByIdOrNull(id)?.originalUrl
 }
