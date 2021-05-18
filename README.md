@@ -5,6 +5,7 @@ Shorty is a tiny little URL shortener. It maps one URL to another. For persisten
 # Features
 Right now Shorty is pretty simple. You can 
 * create mappings using the PUT endpoint
+* URL representations (QR code)
 * retrieve mappings using the GET endpoint
 
 For more details please see openapi.yaml.
@@ -14,4 +15,3 @@ However, the feature list may grow over time.
 # Future
 * Security considerations
 * A lifetime feature for mappings
-* URL representations (e. g. QR codes)
