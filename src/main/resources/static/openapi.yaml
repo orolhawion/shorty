@@ -57,6 +57,11 @@ paths:
               schema:
                 type: string
                 format: url
+          content:
+            application/png:
+              schema:
+                type: string
+                format: binary
 
 components:
   schemas:
@@ -64,6 +69,10 @@ components:
       type: object
       required:
         - originalUrl
+        - qr
       properties:
         originalUrl:
           type: string
+        qr:
+          type: boolean
+          default: false

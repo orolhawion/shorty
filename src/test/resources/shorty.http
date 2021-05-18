@@ -1,12 +1,27 @@
-### Can PUT new mapping
+### Can PUT new mapping without creating QR code
 PUT http://localhost:8080
 Content-Type: application/json
+Accept: application/png
 
-{ "originalUrl": "https://www.martinschroeder.net" }
+{ "originalUrl": "https://www.martinschroeder.net", "qr": true }
 
 > {%
     client.test("Create was successful", function () {
         client.assert(response.status === 201, "Response status is expected to be 201, but is " + response.status);
+        client.assert(response.body !== null, "Response body is expected to be not empty, but is " + response.body);
+    });
+%}
+
+### Can PUT new mapping without creating QR code
+PUT http://localhost:8080
+Content-Type: application/json
+
+{ "originalUrl": "https://www.martinschroeder.net", "qr": false }
+
+> {%
+    client.test("Create was successful", function () {
+        client.assert(response.status === 201, "Response status is expected to be 201, but is " + response.status);
+        client.assert(response.body === "", "Response body is expected to be empty, but is " + response.body);
     });
 
     client.global.set("mappedUrl", response.headers.valueOf('Location'));

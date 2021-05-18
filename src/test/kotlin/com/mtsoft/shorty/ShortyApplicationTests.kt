@@ -5,6 +5,8 @@ import com.mtsoft.shorty.api.model.ShortyCreateRequest
 import com.mtsoft.shorty.persistence.repository.MappingRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.data.repository.findByIdOrNull
@@ -17,15 +19,22 @@ class ShortyApplicationTests : AbstractShortyTest() {
 
     @Autowired private lateinit var mappingRepository: MappingRepository
 
-    @Test
-    fun `can create mapping and get mapped URL`() {
+    @ParameterizedTest
+    @ValueSource(booleans = [true, false])
+    fun `can create mapping and get mapped URL`(qr: Boolean) {
         // insert entry
         val originalUrl = "https://www.martinschroeder.net"
-        val request = ShortyCreateRequest(originalUrl)
+        val request = ShortyCreateRequest(originalUrl, qr)
         val putResult = put("/", request, HttpStatus.CREATED)
         val shortenedUrl = putResult.response.getHeader(HttpHeaders.LOCATION)
 
         assertThat(shortenedUrl).isNotBlank
+
+        if (qr) {
+            assertThat(putResult.response.contentAsByteArray).isNotEmpty
+        }else {
+            assertThat(putResult.response.contentAsByteArray).isNullOrEmpty()
+        }
 
         // verify persisted content
         val id = shortenedUrl!!.split("/").last()
