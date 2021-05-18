@@ -1,0 +1,41 @@
+### Can PUT new mapping
+PUT http://localhost:8080
+Content-Type: application/json
+
+{ "originalUrl": "https://www.martinschroeder.net" }
+
+> {%
+    client.test("Create was successful", function () {
+        client.assert(response.status === 201, "Response status is expected to be 201, but is " + response.status);
+    });
+
+    client.global.set("mappedUrl", response.headers.valueOf('Location'));
+%}
+
+### Can GET mepped URL
+# @no-redirect
+GET {{mappedUrl}}
+
+> {%
+    client.test("Retrieve was successful", function () {
+        client.assert(response.status === 303, "Response status is expected to be 303, but is " + response.status);
+    });
+%}
+
+### Can handle unknown mapping
+GET http://localhost:8080/7FA6547F-F768-4385-A5C7-B36B4E3C9E65
+
+> {%
+    client.test("Retrieve was not successful", function () {
+        client.assert(response.status === 404, "Response status is expected to be 404, but is " + response.status);
+    });
+%}
+
+### Can handle invalid mapping id
+GET http://localhost:8080/any.invalid.mapping.id
+
+> {%
+    client.test("Retrieve was not successful", function () {
+        client.assert(response.status === 400, "Response status is expected to be 400, but is " + response.status);
+    });
+%}

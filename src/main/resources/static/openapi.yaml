@@ -1,0 +1,69 @@
+openapi: 3.0.3
+info:
+  version: ${project.version}
+  title: Shorty - OpenAPI
+servers:
+  - url: '{server}/'
+    variables:
+      server:
+        default: http://localhost:8080 # Localhost
+
+paths:
+  /{mappingId}:
+    get:
+      operationId: getMapping
+      tags:
+        - shorty
+      description: Translates given short URL to original URL and sends redirect if found, 404 otherwhise
+      parameters:
+        - in: path
+          name: mappingId
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: UUID that identifies an URL mapping
+      responses:
+        303:
+          description: "See other: original URL is set to response header Location"
+          headers:
+            Location:
+              description: The original URL mapped by the short URL
+              schema:
+                type: string
+                format: url
+        404:
+          description: No mapping could be found.
+
+  /:
+    put:
+      operationId: createMapping
+      tags:
+        - shorty
+      description: Creates a mapping for the provided URL and returns the shortened URL
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ShortyCreateRequest"
+      responses:
+        201:
+          description: Mapping was created successfully
+          headers:
+            Location:
+              description: Contains the shortened URL mapping the provided original URL
+              allowEmptyValue: false
+              schema:
+                type: string
+                format: url
+
+components:
+  schemas:
+    ShortyCreateRequest:
+      type: object
+      required:
+        - originalUrl
+      properties:
+        originalUrl:
+          type: string
