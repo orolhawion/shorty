@@ -1,6 +1,5 @@
 package com.mtsoft.shorty.service
 
-import com.google.zxing.EncodeHintType
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel
 import net.glxn.qrgen.javase.QRCode
 import org.springframework.core.io.ByteArrayResource
