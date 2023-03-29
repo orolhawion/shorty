@@ -1,5 +1,5 @@
 ### Can PUT new mapping without creating QR code
-PUT http://localhost:8080
+PUT http://localhost:8080/shorty
 Content-Type: application/json
 Accept: application/png
 
@@ -13,7 +13,7 @@ Accept: application/png
 %}
 
 ### Can PUT new mapping without creating QR code
-PUT http://localhost:8080
+PUT http://localhost:8080/shorty
 Content-Type: application/json
 
 { "originalUrl": "https://www.martinschroeder.net", "qr": false }
@@ -38,7 +38,7 @@ GET {{mappedUrl}}
 %}
 
 ### Can handle unknown mapping
-GET http://localhost:8080/7FA6547F-F768-4385-A5C7-B36B4E3C9E65
+GET http://localhost:8080/shorty/7FA6547F-F768-4385-A5C7-B36B4E3C9E65
 
 > {%
     client.test("Retrieve was not successful", function () {
@@ -47,7 +47,7 @@ GET http://localhost:8080/7FA6547F-F768-4385-A5C7-B36B4E3C9E65
 %}
 
 ### Can handle invalid mapping id
-GET http://localhost:8080/any.invalid.mapping.id
+GET http://localhost:8080/shorty/any.invalid.mapping.id
 
 > {%
     client.test("Retrieve was not successful", function () {
