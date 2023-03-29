@@ -1,13 +1,13 @@
 package com.mtsoft.shorty.persistence.model.abstr
 
+import jakarta.persistence.Column
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.Id
+import jakarta.persistence.MappedSuperclass
 import org.hibernate.annotations.ColumnDefault
 import org.hibernate.annotations.GenericGenerator
 import org.hibernate.annotations.Type
 import java.util.*
-import javax.persistence.Column
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
-import javax.persistence.MappedSuperclass
 
 @MappedSuperclass
 abstract class AbstractEntity {
@@ -17,7 +17,6 @@ abstract class AbstractEntity {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator", parameters = [])
     @Column(name = "id", columnDefinition = "uuid", updatable = false, nullable = false)
     @ColumnDefault("random_uuid()")
-    @Type(type = "uuid-char" )
     open var id: UUID? = null
 
     override fun equals(other: Any?): Boolean {

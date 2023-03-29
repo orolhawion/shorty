@@ -25,7 +25,7 @@ class ShortyApplicationTests : AbstractShortyTest() {
         // insert entry
         val originalUrl = "https://www.martinschroeder.net"
         val request = ShortyCreateRequest(originalUrl, qr)
-        val putResult = put("/", request, HttpStatus.CREATED)
+        val putResult = put("/shorty", request, HttpStatus.CREATED)
         val shortenedUrl = putResult.response.getHeader(HttpHeaders.LOCATION)
 
         assertThat(shortenedUrl).isNotBlank
@@ -55,13 +55,13 @@ class ShortyApplicationTests : AbstractShortyTest() {
         // insert entry
         val originalUrl = "https://www.martinschroeder.net"
         val request = ShortyCreateRequest(originalUrl, false)
-        val putResult = put("/", request, HttpStatus.CREATED)
+        val putResult = put("/shorty", request, HttpStatus.CREATED)
         val shortenedUrl = putResult.response.getHeader(HttpHeaders.LOCATION)
 
         assertThat(shortenedUrl).isNotBlank
 
         // insert entry again
-        val putResult2 = put("/", request, HttpStatus.CREATED)
+        val putResult2 = put("/shorty", request, HttpStatus.CREATED)
         val shortenedUrl2 = putResult2.response.getHeader(HttpHeaders.LOCATION)
 
         assertThat(shortenedUrl2).isEqualTo(shortenedUrl)
@@ -69,11 +69,11 @@ class ShortyApplicationTests : AbstractShortyTest() {
 
     @Test
     fun `can handle unknown mapping ids`() {
-        get("http://localhost:8080/7FA6547F-F768-4385-A5C7-B36B4E3C9E65", HttpStatus.NOT_FOUND)
+        get("http://localhost:8080/shorty/7FA6547F-F768-4385-A5C7-B36B4E3C9E65", HttpStatus.NOT_FOUND)
     }
 
     @Test
     fun `can handle invalid mapping ids`() {
-        get("http://localhost:8080/any.invalid.mapping.id", HttpStatus.BAD_REQUEST)
+        get("http://localhost:8080/shorty/any.invalid.mapping.id", HttpStatus.BAD_REQUEST)
     }
 }
