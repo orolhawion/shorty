@@ -29,7 +29,7 @@
     </distributionManagement>
 
     <scm>
-        <connection>scm:git:git@git.martinschroeder.net:mts/shorty.gi</connection>
+        <connection>scm:git:git@git.martinschroeder.net:mts/shorty.git</connection>
         <developerConnection>scm:git:git@git.martinschroeder.net:mts/shorty.git</developerConnection>
         <url>https://git.martinschroeder.net/mts/shorty</url>
         <tag>HEAD</tag>
