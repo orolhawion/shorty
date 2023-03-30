@@ -207,6 +207,9 @@
                             <inputSpec>${project.build.directory}/static/openapi.yaml</inputSpec>
                             <apiPackage>com.mtsoft.shorty.api</apiPackage>
                             <modelPackage>com.mtsoft.shorty.api.model</modelPackage>
+                            <configOptions>
+                                <useTags>true</useTags>
+                            </configOptions>
                         </configuration>
                     </execution>
                 </executions>

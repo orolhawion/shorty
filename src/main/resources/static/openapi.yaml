@@ -9,7 +9,7 @@ servers:
         default: http://localhost:8080 # Localhost
 
 paths:
-  /shorty/{mappingId}:
+  /{mappingId}:
     get:
       operationId: getMapping
       tags:
@@ -35,7 +35,7 @@ paths:
         404:
           description: No mapping could be found.
 
-  /shorty:
+  /:
     put:
       operationId: createMapping
       tags:
